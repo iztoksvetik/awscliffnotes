@@ -33,7 +33,7 @@ Block storage designed to use with **EC2**.
 
 ### Data durability
 
- - Replicated **within an AZ**
+ - (Automatically) Replicated **within an AZ**
  - 99.8% durability (Annual failure rate of 0.1-0.2%), with **io2** 99.999%
  - EBS Snapshots with automated lifecycle policies to backup to **S3**
 
@@ -43,9 +43,18 @@ Block storage designed to use with **EC2**.
 
 ### Block storage types
 
- - **Instance:** ephemeral storage (terminated with instance) attached to host hardware. Similar to EBS in initial configuration, functionally resemble a directly attached disk
- - **Amazon EBS:** attach to an instance, can be moved between instances. Volumes are persistent.
- - **Snapshots:** incremental point-in-time copies of the data of EBS volumes. Used to restore volumes, resize, move between AZs or Regions. Can use Amazon Data Lifecycle Manager (Amazon DLM) to automate. 
+ - **Instance:** 
+   - ephemeral storage (terminated with instance), persists on reboot, lost on termination/hibernation/stopping
+   - physically attached to host computer 
+   - similar to EBS in initial configuration, functionally resemble a directly attached disk
+   - cannot be detached and moved to another instance
+ - **Amazon EBS:** 
+   - attach to an instance, can be moved between instances
+   - volumes are persistent
+ - **Snapshots:** 
+   - incremental point-in-time copies of the data of EBS volumes
+   - used to restore volumes, resize, move between AZs or Regions
+   - can use Amazon Data Lifecycle Manager (Amazon DLM) to automate
 
 ### Volume types
 
@@ -65,6 +74,45 @@ Offers two sub-types, **gp** for general purpose balance price and performance, 
  1. **sc1:**
    - less frequently accessed
    - lowest cost Cold HDD
+
+### Performance
+
+ - **IOPS:**
+   - I/O size capping:
+     - SSD: 256 KiB (kibibyte)
+     - HDD: 1024 KiB
+   - When small I/O operations are physically contiguous, EBS attempts to merge into a single I/O op (up to max size)
+   - Large sequential I/O ops are divided into separate ops of max size
+   - Noncontiguous ops are not merged
+ - **Throughput:**
+   - SSD volumes with large I/O sizes might have lower than provisioned IOPS if throughput limit is reached
+   - HDD volumes with small or random I/O workloads might not reach provisioned throughput as IOPS limit might be reached beforehand
+ - **Burst balance:**
+   - For some volume types you are able to burst performance above provisioned limit
+   - When operating within provisioned baseline you accumulate burst credits
+   - When you go above, you use them
+   - If the balance is depleted, you can't go above baseline
+ - **Latency:**
+   - *SSD:* from <1ms to <10ms
+   - *HDD:* average of <99ms
+   - Number of pending I/O requests (volume queue) can affect it and must be optimized
+     - Varies for each workload
+     - Transaction intensive apps are particularly sensitive to latency, keeping the queue lengths low and number of IOPS available high
+     - Throughput intensive apps are less sensitive, queues can be long(er)
+     
+
+### Use cases
+
+ 1. Enterprise applications - Oracle, SAP, Microsoft Exchange
+ 1. Lift and shift
+   - AWS Application Migration Service (AWS MGN)
+   - AWS Server Migration Service (AWS SMS)
+ 1. Relational databases
+ 1. NoSQL databases
+ 1. Big Data analytics engines (Hadoop, Spark)
+ 1. File systems and media workflows
+ 1. Business continuity - Snapshots, AWS Backup
+ 1. Disaster recovery (for on-premises or cloud) - CloudEndure
 
 ## (Primary) Storage types
 

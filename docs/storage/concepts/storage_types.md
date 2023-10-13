@@ -15,21 +15,28 @@ Storage devices can be HDDs, SSDs or newer types such as Non-Volatile Memory Exp
 
 ### Management
 
- - **Block size**
-   - is determined while formatting
-   - its flexibility is fundamental differentiator
- - **Managing metadata**
-   - data about data
-   - helps to manage resource (permissions, type, creation/update time...)
-   - tracks blocks which were used to store the data
- - **Read/write activity**
-   - controlling who can read/write/delete data (can reference external sources like LDAP to do so)
-   - determining how clients or applications are notified when another client is accessing the data
-   - when and when the data is stored to blocks, how its cached 
-   - managing read request, order, caching...
- - **Locking**
-   - managing data integrity while being modified or deleted
-   - file or block level locking
+#### Block size
+
+ - is determined while formatting
+ - its flexibility is fundamental differentiator
+
+#### Managing metadata
+
+ - data about data
+ - helps to manage resource (permissions, type, creation/update time...)
+ - tracks blocks which were used to store the data
+
+#### Read/write activity
+
+ - controlling who can read/write/delete data (can reference external sources like LDAP to do so)
+ - determining how clients or applications are notified when another client is accessing the data
+ - when and when the data is stored to blocks, how its cached 
+ - managing read request, order, caching...
+
+#### Locking
+
+ - managing data integrity while being modified or deleted
+ - file or block level locking
 
 ### Volumes
 

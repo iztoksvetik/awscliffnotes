@@ -1,7 +1,7 @@
 # Storage
 
  1. AWS Backup
- 1. [Amazon Elastic Block Storage (Amazon EBS)](#amazon-elastic-block-storage)
+ 1. [Amazon Elastic Block Storage (Amazon EBS)](./ebs/)
  1. AWS Elastic Disaster recovery
  1. Amazon Elastic File System (Amazon EFS)
  1. Amazon FSX (for all types)

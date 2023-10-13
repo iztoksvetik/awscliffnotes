@@ -1,0 +1,12 @@
+site_name: AWS Cliff Notes
+
+theme:
+  name: material
+  features:
+   - navigation.tabs
+   - navigation.sections
+   - navigation.path
+   - navigation.indexes
+   - navigation.top
+   - toc.follow
+
